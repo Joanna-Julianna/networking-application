@@ -1,19 +1,19 @@
-#Networking application
+# Networking application
 
-##Requirements:
+## Requirements:
 Installed jdk 12
 
-##How to build
+## How to build
 ```
 ./gradlew clean build
 ```
 
-##Running
+## Running
 ```
 java -jar build/libs/networking-application-0.0.1-SNAPSHOT.jar
 ```
 
 
-##API documentation
+## API documentation
 Swagger
 http://localhost:8080/swagger-ui.html
