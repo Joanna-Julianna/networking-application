@@ -6,7 +6,9 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.http.*;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -37,7 +39,6 @@ public class FollowingControllerTest {
         //THEN
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(1, response.getBody().getFollowing().size());
-        assertEquals(followingId, response.getBody().getFollowing().get(0).getId());
     }
 
     private String createURLWithPort(String uri) {

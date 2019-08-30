@@ -27,12 +27,20 @@ class FollowingService {
             return Optional.of(modelMapper.map(follower, UserFollowingDto.class));
         }
 
-        boolean followed = follower.get().follow(followingUser.get());
+        boolean followed = follow(follower.get(), followingUser.get());
         if (followed) {
             User user = userRepository.save(follower.get());
             return Optional.of(modelMapper.map(user, UserFollowingDto.class));
         }
 
         return Optional.empty();
+    }
+
+    private boolean follow(User follower, User newFollowing) {
+        if (!follower.getFollowing().contains(newFollowing.getId())) {
+            follower.getFollowing().add(newFollowing);
+            return true;
+        }
+        return false;
     }
 }

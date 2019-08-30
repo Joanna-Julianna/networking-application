@@ -2,7 +2,7 @@ package com.networkingapplication.user;
 
 import lombok.Data;
 
-import java.util.List;
+import java.util.Set;
 
 @Data
 public class UserFollowingDto {
@@ -15,5 +15,5 @@ public class UserFollowingDto {
 
     private String lastName;
 
-    private List<UserDto> following;
+    private Set<UserDto> following;
 }

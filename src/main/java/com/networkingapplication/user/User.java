@@ -3,8 +3,7 @@ package com.networkingapplication.user;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -22,19 +21,6 @@ public class User {
     private String lastName;
 
     @ManyToMany
-    private List<User> following = new ArrayList<>();
+    private Set<User> following;
 
-    public boolean follow(User newFollowing) {
-        if (isNewFollowingUser(newFollowing.getId())) {
-            following.add(newFollowing);
-            return true;
-        }
-        return false;
-    }
-
-    private boolean isNewFollowingUser(Long followingId) {
-        return following.stream()
-                .noneMatch(previousFollowing -> followingId.equals(previousFollowing.getId()));
-
-    }
 }
