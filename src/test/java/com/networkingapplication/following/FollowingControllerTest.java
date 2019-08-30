@@ -34,7 +34,7 @@ public class FollowingControllerTest {
         //WHEN
         ResponseEntity<UserFollowingDto> response = restTemplate.exchange(
                 createURLWithPort("/user/follow/" + followerId + "/" + followingId),
-                HttpMethod.GET, null, UserFollowingDto.class);
+                HttpMethod.POST, null, UserFollowingDto.class);
 
         //THEN
         assertEquals(HttpStatus.OK, response.getStatusCode());
