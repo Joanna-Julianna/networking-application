@@ -24,11 +24,12 @@ class FollowingService {
 
         Optional<User> followingUser = userRepository.findById(followingUserId);
         if (followingUser.isEmpty()) {
-            return Optional.of(modelMapper.map(follower, UserFollowingDto.class));
+            return Optional.empty();
         }
 
-        boolean followed = follow(follower.get(), followingUser.get());
+        boolean followed = isUnfollowed(follower.get(), followingUser.get());
         if (followed) {
+            follower.get().getFollowing().add(followingUser.get());
             User user = userRepository.save(follower.get());
             return Optional.of(modelMapper.map(user, UserFollowingDto.class));
         }
@@ -36,11 +37,7 @@ class FollowingService {
         return Optional.empty();
     }
 
-    private boolean follow(User follower, User newFollowing) {
-        if (!follower.getFollowing().contains(newFollowing.getId())) {
-            follower.getFollowing().add(newFollowing);
-            return true;
-        }
-        return false;
+    private boolean isUnfollowed(User follower, User newFollowing) {
+        return !follower.getFollowing().contains(newFollowing);
     }
 }

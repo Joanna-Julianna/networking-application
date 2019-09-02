@@ -6,9 +6,7 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -23,6 +21,7 @@ public class FollowingControllerTest {
     @LocalServerPort
     private int port;
     private TestRestTemplate restTemplate = new TestRestTemplate();
+    private HttpHeaders headers = new HttpHeaders();
 
     @Test
     @Sql("/users.sql")
@@ -30,11 +29,12 @@ public class FollowingControllerTest {
         //GIVEN
         Long followerId = 1L;
         Long followingId = 2L;
+        HttpEntity<Long> entity = new HttpEntity<>(followingId, headers);
 
         //WHEN
         ResponseEntity<UserFollowingDto> response = restTemplate.exchange(
-                createURLWithPort("/user/follow/" + followerId + "/" + followingId),
-                HttpMethod.POST, null, UserFollowingDto.class);
+                createURLWithPort("/user/follow/" + followerId),
+                HttpMethod.POST, entity, UserFollowingDto.class);
 
         //THEN
         assertEquals(HttpStatus.OK, response.getStatusCode());
